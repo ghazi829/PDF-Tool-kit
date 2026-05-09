@@ -17,7 +17,7 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-1 space-y-8 animate-in fade-in slide-in-from-left-5 duration-700 delay-200">
             {[
-              { icon: Mail, title: "Email Us", detail: "support@docuconvert.com", sub: "For general inquiries" },
+              { icon: Mail, title: "Email Us", detail: "support@pdfninja.com", sub: "For general inquiries" },
               { icon: Phone, title: "Call Us", detail: "+1 (555) 000-0000", sub: "Mon-Fri from 9am to 6pm" },
               { icon: MapPin, title: "Visit Us", detail: "123 Tech Avenue", sub: "San Francisco, CA 94105" }
             ].map((item, i) => (

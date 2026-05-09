@@ -1,228 +1,59 @@
-import React, { useState } from 'react';
-import { Upload, FileText, CheckCircle2, ArrowRight, Shield, Zap, Lock } from 'lucide-react';
-import { jsPDF } from 'jspdf';
-import mammoth from 'mammoth';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FileText, Shield, Zap, Image as ImageIcon, Presentation, Table, Layers, Scissors, FileEdit } from 'lucide-react';
 
 const Home = () => {
-  const [file, setFile] = useState(null);
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [status, setStatus] = useState('idle'); // idle, uploading, converting, success, error
-
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      validateAndSetFile(selectedFile);
-    }
-  };
-
-  const validateAndSetFile = (selectedFile) => {
-    const allowedTypes = ['.doc', '.docx', '.ppt', '.pptx'];
-    const extension = selectedFile.name.substring(selectedFile.name.lastIndexOf('.')).toLowerCase();
-    
-    if (allowedTypes.includes(extension)) {
-      setFile(selectedFile);
-      setStatus('idle');
-    } else {
-      alert('Please upload a Word (.doc, .docx) or PowerPoint (.ppt, .pptx) file.');
-    }
-  };
-
-  const startConversion = () => {
-    if (!file) return;
-    
-    setIsUploading(true);
-    setStatus('uploading');
-    
-    // Simulate API Call
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += Math.floor(Math.random() * 10) + 5;
-      if (progress >= 100) {
-        progress = 100;
-        setUploadProgress(100);
-        clearInterval(interval);
-        setStatus('converting');
-        // Simulate remote server processing
-        setTimeout(() => {
-          setStatus('success');
-          setIsUploading(false);
-        }, 1500);
-      }
-      setUploadProgress(progress);
-    }, 150);
-  };
-
-  const handleDownload = async () => {
-    if (!file) return;
-    
-    const doc = new jsPDF();
-    let extractedText = "";
-
-    try {
-      if (file.name.endsWith('.docx')) {
-        // Real-time text extraction for Word files
-        const arrayBuffer = await file.arrayBuffer();
-        const result = await mammoth.extractRawText({ arrayBuffer });
-        extractedText = result.value;
-      } else {
-        extractedText = "Content extraction for .ppt/.pptx requires a specialized server-side conversion engine. In a production environment, this data would be processed by our LibreOffice-powered backend API.";
-      }
-    } catch (error) {
-      console.error("Extraction error:", error);
-      extractedText = "Error extracting content. In production, this would be handled by the server.";
-    }
-    
-    // Header
-    doc.setFillColor(19, 36, 64);
-    doc.rect(0, 0, 210, 30, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(20);
-    doc.text('DocuConvert', 20, 20);
-    
-    // Body
-    doc.setTextColor(19, 36, 64);
-    doc.setFontSize(14);
-    doc.text('Document Content:', 20, 50);
-    doc.setDrawColor(191, 9, 47);
-    doc.line(20, 55, 190, 55);
-    
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(60, 60, 60);
-    
-    const splitText = doc.splitTextToSize(extractedText || "No readable text found.", 170);
-    doc.text(splitText, 20, 70);
-    
-    // Metadata Footer
-    doc.setFontSize(8);
-    doc.setTextColor(150, 150, 150);
-    doc.text(`Source: ${file.name} | Date: ${new Date().toLocaleString()}`, 20, 285);
-    
-    doc.save(file.name.replace(/\.[^/.]+$/, "") + ".pdf");
-  };
-
-  const reset = () => {
-    setFile(null);
-    setUploadProgress(0);
-    setStatus('idle');
-  };
-
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-10">
+      {/* Header Section */}
+      <section className="relative pt-32 pb-20 overflow-hidden bg-navy">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-20">
            <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary rounded-full blur-3xl animate-pulse" />
            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal rounded-full blur-3xl animate-pulse" />
         </div>
 
         <div className="container mx-auto px-6 text-center">
-          <h1 className="text-5xl md:text-7xl font-display font-extrabold text-navy mb-6 tracking-tight">
-            Convert Office to <span className="text-primary italic">PDF</span> <br /> 
-            in Seconds.
+          <h1 className="text-5xl md:text-6xl font-display font-extrabold text-white mb-6 tracking-tight">
+            Every PDF Tool at Your <span className="text-primary italic">Fingertips</span>
           </h1>
-          <p className="text-xl text-navy/60 max-w-2xl mx-auto mb-12">
-            The world's most trusted document converter. Secure, fast, and free for everyone. 
-            No software installation required.
+          <p className="text-xl text-white/60 max-w-2xl mx-auto">
+            PDFNinja provides all the tools you need to manage your documents effectively. 
+            Fast, secure, and professional.
           </p>
+        </div>
+      </section>
 
-          {/* Conversion Tool */}
-          <div className="max-w-3xl mx-auto transition-all duration-500 transform hover:scale-[1.01]">
-            <div className="bg-white rounded-3xl premium-shadow p-8 md:p-12 border border-navy/5 relative overflow-hidden">
-              <div className="transition-opacity duration-300">
-                {status === 'idle' && (
-                  <div className="flex flex-col items-center animate-in fade-in duration-300">
-                    {!file ? (
-                      <label className="w-full h-64 border-2 border-dashed border-navy/10 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition-all group">
-                        <div className="bg-primary/10 p-4 rounded-full mb-4 group-hover:scale-110 transition-transform duration-300">
-                          <Upload className="text-primary w-8 h-8" />
-                        </div>
-                        <span className="text-lg font-bold text-navy">Choose Files</span>
-                        <span className="text-navy/40 text-sm mt-1">or drag and drop here</span>
-                        <input type="file" className="hidden" onChange={handleFileChange} accept=".doc,.docx,.ppt,.pptx" />
-                      </label>
-                    ) : (
-                      <div className="w-full p-6 bg-navy/5 rounded-2xl flex items-center justify-between animate-in zoom-in-95 duration-300">
-                        <div className="flex items-center space-x-4">
-                          <div className="bg-white p-3 rounded-lg shadow-sm">
-                            <FileText className="text-primary" />
-                          </div>
-                          <div className="text-left text-wrap truncate">
-                            <p className="font-bold text-navy truncate max-w-[150px] sm:max-w-md">{file.name}</p>
-                            <p className="text-navy/40 text-xs uppercase">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
-                          </div>
-                        </div>
-                        <button onClick={() => setFile(null)} className="text-navy/40 hover:text-primary p-2 font-semibold transition-colors">
-                           Change
-                        </button>
-                      </div>
-                    )}
+      {/* Tools Grid Section */}
+      <section className="py-24 bg-gray-50/50">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-display font-bold text-navy mb-4">Popular PDF Tools</h2>
+            <p className="text-navy/60 text-lg">Select a tool below to get started with your conversion.</p>
+          </div>
 
-                    <button
-                      onClick={startConversion}
-                      disabled={!file}
-                      className={`mt-8 w-full py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center space-x-2 ${
-                        file ? 'bg-primary text-white premium-shadow hover:-translate-y-1' : 'bg-navy/10 text-navy/30 cursor-not-allowed'
-                      }`}
-                    >
-                      <span>Convert to PDF</span>
-                      <ArrowRight size={20} />
-                    </button>
-                  </div>
-                )}
-
-                {(status === 'uploading' || status === 'converting') && (
-                  <div className="py-12 flex flex-col items-center animate-in fade-in duration-300">
-                    <div className="relative w-24 h-24 mb-8">
-                       <svg className="w-full h-full transform -rotate-90">
-                          <circle cx="48" cy="48" r="40" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-navy/5" />
-                          <circle 
-                            cx="48" cy="48" r="40" stroke="currentColor" strokeWidth="8" fill="transparent" 
-                            strokeDasharray={251.2}
-                            strokeDashoffset={251.2 - (251.2 * uploadProgress) / 100}
-                            className="text-primary transition-all duration-300 ease-out" 
-                          />
-                       </svg>
-                       <div className="absolute inset-0 flex items-center justify-center font-display font-bold text-navy text-lg">
-                          {status === 'uploading' ? `${uploadProgress}%` : <Zap className="text-primary animate-pulse" />}
-                       </div>
-                    </div>
-                    <h3 className="text-2xl font-bold text-navy mb-2">
-                      {status === 'uploading' ? 'Uploading your file...' : 'Converting to PDF...'}
-                    </h3>
-                    <p className="text-navy/40">Please don't close this window.</p>
-                  </div>
-                )}
-
-                {status === 'success' && (
-                  <div className="py-8 flex flex-col items-center text-center animate-in zoom-in-95 duration-500">
-                    <div className="bg-teal/10 p-6 rounded-full mb-6 animate-bounce">
-                      <CheckCircle2 className="text-teal w-16 h-16" />
-                    </div>
-                    <h3 className="text-3xl font-bold text-navy mb-2">Conversion Complete!</h3>
-                    <p className="text-navy/60 mb-8">Your file has been successfully converted to a high-quality PDF.</p>
-                    
-                    <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 w-full">
-                       <button 
-                         onClick={handleDownload}
-                         className="flex-1 bg-teal text-white py-4 rounded-xl font-bold premium-shadow hover:bg-teal/90 transition-all hover:-translate-y-1"
-                       >
-                          Download PDF
-                       </button>
-                       <button onClick={reset} className="flex-1 bg-navy/5 text-navy py-4 rounded-xl font-bold hover:bg-navy/10 transition-all">
-                          Convert Another
-                       </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-navy/40 text-sm">
-               <span className="flex items-center"><Shield size={16} className="mr-2" /> Encrypted & Secure</span>
-               <span className="flex items-center"><Lock size={16} className="mr-2" /> Auto-delete after 1h</span>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { title: "Word to PDF", desc: "Convert DOC and DOCX files to PDF.", icon: FileText, path: "/word-to-pdf", color: "bg-blue-50 text-blue-600" },
+              { title: "JPG to PDF", desc: "Convert JPG images to PDF in seconds.", icon: ImageIcon, path: "/jpg-to-pdf", color: "bg-orange-50 text-orange-600" },
+              { title: "PowerPoint to PDF", desc: "Convert PPT and PPTX to PDF format.", icon: Presentation, path: "/word-to-pdf", color: "bg-red-50 text-red-600" },
+              { title: "Excel to PDF", desc: "Convert Excel spreadsheets to PDF.", icon: Table, path: "/", color: "bg-green-50 text-green-600" },
+              { title: "Merge PDF", desc: "Combine multiple PDFs into one document.", icon: Layers, path: "", color: "bg-purple-50 text-purple-600" },
+              { title: "Split PDF", desc: "Separate one page or a whole set.", icon: Scissors, path: "/", color: "bg-yellow-50 text-yellow-600" },
+              { title: "PDF to Word", desc: "Convert PDF files back to Word documents.", icon: FileEdit, path: "/", color: "bg-indigo-50 text-indigo-600" },
+              { title: "Compress PDF", desc: "Reduce file size without losing quality.", icon: Zap, path: "/", color: "bg-teal-50 text-teal-600" },
+            ].map((tool, i) => (
+              <Link
+                key={i}
+                to={tool.path}
+                className="group bg-white p-8 rounded-3xl border border-navy/5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className={`${tool.color} w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                  <tool.icon size={28} />
+                </div>
+                <h3 className="text-xl font-bold text-navy mb-2 group-hover:text-primary transition-colors">{tool.title}</h3>
+                <p className="text-navy/50 text-sm leading-relaxed">{tool.desc}</p>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -231,7 +62,7 @@ const Home = () => {
       <section className="py-24 bg-navy">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Why choose DocuConvert?</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Why choose PDFNinja?</h2>
             <p className="text-white/60 text-lg">Built for speed, security, and precision.</p>
           </div>
           
@@ -265,11 +96,11 @@ const Home = () => {
              
              <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-8 relative z-10">Ready to start converting?</h2>
              <p className="text-white/80 text-xl mb-12 max-w-2xl mx-auto relative z-10">
-               Join thousands of users who trust DocuConvert for their daily document tasks. No credit card required.
+                Join thousands of users who trust PDFNinja for their daily document tasks. No credit card required.
              </p>
-             <button className="bg-navy text-white px-12 py-5 rounded-full font-bold text-lg hover:bg-navy/90 transition-all premium-shadow relative z-10 hover:scale-105">
-               Get Started for Free
-             </button>
+             <Link to="/signup" className="inline-block bg-navy text-white px-12 py-5 rounded-full font-bold text-lg hover:bg-navy/90 transition-all premium-shadow relative z-10 hover:scale-105">
+                Get Started for Free
+             </Link>
           </div>
         </div>
       </section>

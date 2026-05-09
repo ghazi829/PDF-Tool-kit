@@ -98,7 +98,7 @@ const Signup = () => {
                 Join 10,000+ users worldwide.
               </h3>
               <p className="text-white/60 text-lg leading-relaxed">
-                "DocuConvert has saved me hours of work. The quality is unmatched and the speed is incredible!"
+                "PDFNinja has saved me hours of work. The quality is unmatched and the speed is incredible!"
               </p>
               <div className="mt-6 flex justify-center space-x-1">
                  {[1,2,3,4,5].map(i => (
