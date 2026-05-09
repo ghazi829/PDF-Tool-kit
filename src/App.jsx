@@ -8,6 +8,11 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import JpgToPdf from './pages/Tools/JpgToPdf';
 import WordToPdf from './pages/Tools/WordToPdf';
+import ExcelToPdf from './pages/Tools/ExcelToPdf';
+import MergePdf from './pages/Tools/MergePdf';
+import SplitPdf from './pages/Tools/SplitPdf';
+import PdfToWord from './pages/Tools/PdfToWord';
+import CompressPdf from './pages/Tools/CompressPdf';
 
 function App() {
   return (
@@ -21,6 +26,11 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/jpg-to-pdf" element={<JpgToPdf />} />
           <Route path="/word-to-pdf" element={<WordToPdf />} />
+          <Route path="/excel-to-pdf" element={<ExcelToPdf />} />
+          <Route path="/merge-pdf" element={<MergePdf />} />
+          <Route path="/split-pdf" element={<SplitPdf />} />
+          <Route path="/pdf-to-word" element={<PdfToWord />} />
+          <Route path="/compress-pdf" element={<CompressPdf />} />
         </Routes>
       </Layout>
     </Router>

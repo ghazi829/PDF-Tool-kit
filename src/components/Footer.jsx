@@ -40,11 +40,11 @@ const Footer = () => {
               <li><Link to="/word-to-pdf" className="hover:text-primary transition-colors">Word to PDF</Link></li>
               <li><Link to="/jpg-to-pdf" className="hover:text-primary transition-colors">JPG to PDF</Link></li>
               <li><Link to="/word-to-pdf" className="hover:text-primary transition-colors">PowerPoint to PDF</Link></li>
-              <li><Link to="/" className="hover:text-primary transition-colors">Excel to PDF</Link></li>
-              <li><Link to="/" className="hover:text-primary transition-colors">Merge PDF</Link></li>
-              <li><Link to="/" className="hover:text-primary transition-colors">Split PDF</Link></li>
-              <li><Link to="/" className="hover:text-primary transition-colors">PDF to Word</Link></li>
-              <li><Link to="/" className="hover:text-primary transition-colors">Compress PDF</Link></li>
+              <li><Link to="/excel-to-pdf" className="hover:text-primary transition-colors">Excel to PDF</Link></li>
+              <li><Link to="/merge-pdf" className="hover:text-primary transition-colors">Merge PDF</Link></li>
+              <li><Link to="/split-pdf" className="hover:text-primary transition-colors">Split PDF</Link></li>
+              <li><Link to="/pdf-to-word" className="hover:text-primary transition-colors">PDF to Word</Link></li>
+              <li><Link to="/compress-pdf" className="hover:text-primary transition-colors">Compress PDF</Link></li>
             </ul>
           </div>
 

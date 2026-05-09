@@ -24,21 +24,27 @@ const Navbar = () => {
     { name: 'Word to PDF', path: '/word-to-pdf', icon: FileText, color: 'text-blue-600' },
     { name: 'JPG to PDF', path: '/jpg-to-pdf', icon: ImageIcon, color: 'text-orange-600' },
     { name: 'PowerPoint to PDF', path: '/word-to-pdf', icon: Presentation, color: 'text-red-600' },
-    { name: 'Excel to PDF', path: '/', icon: Table, color: 'text-green-600' },
-    { name: 'Merge PDF', path: '/', icon: Layers, color: 'text-purple-600' },
-    { name: 'Split PDF', path: '/', icon: Scissors, color: 'text-yellow-600' },
-    { name: 'PDF to Word', path: '/', icon: FileEdit, color: 'text-indigo-600' },
-    { name: 'Compress PDF', path: '/', icon: Zap, color: 'text-teal-600' },
+    { name: 'Excel to PDF', path: '/excel-to-pdf', icon: Table, color: 'text-green-600' },
+    { name: 'Merge PDF', path: '/merge-pdf', icon: Layers, color: 'text-purple-600' },
+    { name: 'Split PDF', path: '/split-pdf', icon: Scissors, color: 'text-yellow-600' },
+    { name: 'PDF to Word', path: '/pdf-to-word', icon: FileEdit, color: 'text-indigo-600' },
+    { name: 'Compress PDF', path: '/compress-pdf', icon: Zap, color: 'text-teal-600' },
   ];
 
+  const isHomePage = location.pathname === '/';
+
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'glass py-3 premium-shadow' : 'bg-transparent py-5'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${
+      scrolled 
+        ? 'glass py-3 premium-shadow' 
+        : `py-5 ${isHomePage ? 'bg-transparent' : 'bg-white shadow-sm'}`
+    }`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         <Link to="/" className="flex items-center space-x-2 group">
           <div className="bg-primary p-2 rounded-lg group-hover:rotate-12 transition-transform duration-300">
             <FileText className="text-white w-6 h-6" />
           </div>
-          <span className="font-display font-bold text-2xl tracking-tight text-navy">
+          <span className={`font-display font-bold text-2xl tracking-tight ${isHomePage && !scrolled ? 'text-white' : 'text-navy'}`}>
             PDF<span className="text-primary">Ninja</span>
           </span>
         </Link>
@@ -46,7 +52,9 @@ const Navbar = () => {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-8">
           <div className="relative group" onMouseEnter={() => setIsToolsOpen(true)} onMouseLeave={() => setIsToolsOpen(false)}>
-            <button className="flex items-center space-x-1 font-medium text-navy/70 hover:text-primary transition-colors py-2">
+            <button className={`flex items-center space-x-1 font-medium transition-colors py-2 ${
+              isHomePage && !scrolled ? 'text-white/80 hover:text-white' : 'text-navy/70 hover:text-primary'
+            }`}>
               <span>Tools</span>
               <ChevronDown size={16} className={`transition-transform duration-300 ${isToolsOpen ? 'rotate-180' : ''}`} />
             </button>
@@ -74,18 +82,26 @@ const Navbar = () => {
             <Link
               key={link.name}
               to={link.path}
-              className={`font-medium transition-colors hover:text-primary ${location.pathname === link.path ? 'text-primary' : 'text-navy/70'}`}
+              className={`font-medium transition-colors ${
+                isHomePage && !scrolled 
+                  ? `hover:text-white ${location.pathname === link.path ? 'text-white font-bold' : 'text-white/70'}` 
+                  : `hover:text-primary ${location.pathname === link.path ? 'text-primary font-bold' : 'text-navy/70'}`
+              }`}
             >
               {link.name}
             </Link>
           ))}
           <div className="flex items-center space-x-4">
-            <Link to="/login" className="text-navy font-semibold hover:text-primary transition-colors">
+            <Link to="/login" className={`font-semibold transition-colors ${
+              isHomePage && !scrolled ? 'text-white hover:text-white/80' : 'text-navy hover:text-primary'
+            }`}>
               Log in
             </Link>
             <Link
               to="/signup"
-              className="bg-navy text-white px-6 py-2.5 rounded-full font-semibold hover:bg-deep-blue transition-all premium-shadow"
+              className={`${
+                isHomePage && !scrolled ? 'bg-white text-navy' : 'bg-navy text-white'
+              } px-6 py-2.5 rounded-full font-semibold transition-all premium-shadow hover:scale-105`}
             >
               Sign Up
             </Link>
@@ -93,7 +109,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <button className="md:hidden text-navy" onClick={() => setIsOpen(!isOpen)}>
+        <button className={`md:hidden ${isHomePage && !scrolled ? 'text-white' : 'text-navy'}`} onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
