@@ -13,6 +13,7 @@ import MergePdf from './pages/Tools/MergePdf';
 import SplitPdf from './pages/Tools/SplitPdf';
 import PdfToWord from './pages/Tools/PdfToWord';
 import CompressPdf from './pages/Tools/CompressPdf';
+import PptToPdf from './pages/Tools/PptToPdf';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/jpg-to-pdf" element={<JpgToPdf />} />
           <Route path="/word-to-pdf" element={<WordToPdf />} />
           <Route path="/excel-to-pdf" element={<ExcelToPdf />} />
+          <Route path="/ppt-to-pdf" element={<PptToPdf />} />
           <Route path="/merge-pdf" element={<MergePdf />} />
           <Route path="/split-pdf" element={<SplitPdf />} />
           <Route path="/pdf-to-word" element={<PdfToWord />} />

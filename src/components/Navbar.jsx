@@ -23,7 +23,7 @@ const Navbar = () => {
   const tools = [
     { name: 'Word to PDF', path: '/word-to-pdf', icon: FileText, color: 'text-blue-600' },
     { name: 'JPG to PDF', path: '/jpg-to-pdf', icon: ImageIcon, color: 'text-orange-600' },
-    { name: 'PowerPoint to PDF', path: '/word-to-pdf', icon: Presentation, color: 'text-red-600' },
+    { name: 'PowerPoint to PDF', path: '/ppt-to-pdf', icon: Presentation, color: 'text-red-600' },
     { name: 'Excel to PDF', path: '/excel-to-pdf', icon: Table, color: 'text-green-600' },
     { name: 'Merge PDF', path: '/merge-pdf', icon: Layers, color: 'text-purple-600' },
     { name: 'Split PDF', path: '/split-pdf', icon: Scissors, color: 'text-yellow-600' },
@@ -35,8 +35,8 @@ const Navbar = () => {
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'glass py-3 premium-shadow' 
+      scrolled || isOpen
+        ? 'bg-white py-3 premium-shadow' 
         : `py-5 ${isHomePage ? 'bg-transparent' : 'bg-white shadow-sm'}`
     }`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
@@ -44,7 +44,7 @@ const Navbar = () => {
           <div className="bg-primary p-2 rounded-lg group-hover:rotate-12 transition-transform duration-300">
             <FileText className="text-white w-6 h-6" />
           </div>
-          <span className={`font-display font-bold text-2xl tracking-tight ${isHomePage && !scrolled ? 'text-white' : 'text-navy'}`}>
+          <span className={`font-display font-bold text-2xl tracking-tight ${isHomePage && !scrolled && !isOpen ? 'text-white' : 'text-navy'}`}>
             PDF<span className="text-primary">Ninja</span>
           </span>
         </Link>
@@ -109,14 +109,14 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <button className={`md:hidden ${isHomePage && !scrolled ? 'text-white' : 'text-navy'}`} onClick={() => setIsOpen(!isOpen)}>
+        <button className={`md:hidden transition-colors ${isHomePage && !scrolled && !isOpen ? 'text-white' : 'text-navy'}`} onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
       {/* Mobile Nav */}
       <div
-        className={`absolute top-full left-0 w-full glass premium-shadow md:hidden border-t border-navy/10 transition-all duration-300 origin-top ${
+        className={`absolute top-full left-0 w-full bg-white premium-shadow md:hidden border-t border-navy/10 transition-all duration-300 origin-top ${
           isOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0 pointer-events-none'
         }`}
       >

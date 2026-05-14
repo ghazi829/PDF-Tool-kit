@@ -35,7 +35,7 @@ const Home = () => {
             {[
               { title: "Word to PDF", desc: "Convert DOC and DOCX files to PDF.", icon: FileText, path: "/word-to-pdf", color: "bg-blue-50 text-blue-600" },
               { title: "JPG to PDF", desc: "Convert JPG images to PDF in seconds.", icon: ImageIcon, path: "/jpg-to-pdf", color: "bg-orange-50 text-orange-600" },
-              { title: "PowerPoint to PDF", desc: "Convert PPT and PPTX to PDF format.", icon: Presentation, path: "/word-to-pdf", color: "bg-red-50 text-red-600" },
+              { title: "PowerPoint to PDF", desc: "Convert PPT and PPTX to PDF format.", icon: Presentation, path: "/ppt-to-pdf", color: "bg-red-50 text-red-600" },
               { title: "Excel to PDF", desc: "Convert Excel spreadsheets to PDF.", icon: Table, path: "/excel-to-pdf", color: "bg-green-50 text-green-600" },
               { title: "Merge PDF", desc: "Combine multiple PDFs into one document.", icon: Layers, path: "/merge-pdf", color: "bg-purple-50 text-purple-600" },
               { title: "Split PDF", desc: "Separate one page or a whole set.", icon: Scissors, path: "/split-pdf", color: "bg-yellow-50 text-yellow-600" },
