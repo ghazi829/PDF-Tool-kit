@@ -2,7 +2,7 @@
 
 PDFNinja is a high-performance, premium web application built with React and Vite, designed to provide a comprehensive suite of document management tools. Whether you need to convert Office files to PDF, merge multiple documents, or extract pages, PDFNinja handles it with speed, security, and precision.
 
-![PDFNinja Banner](<img src="./src/assets/Pdf Ninja.jpg" alt="PDFNinja Banner"/>)
+![PDFNinja Banner](src/assets/Pdf Ninja.jpg)
 
 ## 🚀 Key Features
 
